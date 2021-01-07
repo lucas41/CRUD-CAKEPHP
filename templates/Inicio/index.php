@@ -1,4 +1,7 @@
-
+<?= $this->Form->create(null,['type'=>'get'])?>
+<?= $this->Form->control('key',['label' => 'search', 'values'=>$this->request->getQuery('key')])?>
+<?= $this->Form->submit()?>
+<?= $this->Form->end()?>
 
 <table class=”table”>
     <thead>

@@ -10,9 +10,16 @@ class InicioController extends AppController
 
 
     public function index(){
+        $key = $this->request->getQuery('key');
 
-        $ProdutosTable= TableRegistry::get('produtos');  
+        $ProdutosTable= TableRegistry::get('produtos');
+        if(empty($key)){
         $produtos = $ProdutosTable->find('all');
+        }else{
+            $produtos = $ProdutosTable->find('all', [
+            'conditions' => ['produtos.Nome' => $key]
+            ]);
+        }
         $this->set('produtos', $produtos);
             
     }
