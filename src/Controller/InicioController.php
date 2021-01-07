@@ -10,6 +10,7 @@ class InicioController extends AppController
 
 
     public function index(){
+
         $key = $this->request->getQuery('key');
 
         $ProdutosTable= TableRegistry::get('produtos');
@@ -17,7 +18,7 @@ class InicioController extends AppController
         $produtos = $ProdutosTable->find('all');
         }else{
             $produtos = $ProdutosTable->find('all', [
-            'conditions' => ['produtos.Nome' => $key]
+            'conditions' => ['or'=>['produtos.Nome like'=>'%'.$key.'%','produtos.descricao like'=>'%'.$key.'%']]
             ]);
         }
         $this->set('produtos', $produtos);
