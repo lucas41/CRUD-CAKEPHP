@@ -8,12 +8,41 @@ use Cake\ORM\TableRegistry;
 class InicioController extends AppController
 {
 
+
     public function index(){
 
         $ProdutosTable= TableRegistry::get('produtos');  
         $produtos = $ProdutosTable->find('all');
         $this->set('produtos', $produtos);
-        
+            
+    }
+
+
+    public function jogo(){
+        $ProdutosTable= TableRegistry::get('produtos');  
+        $produtos = $ProdutosTable->find('all', [
+        'conditions' => ['produtos.tipo' => 0]
+        ]);
+        $this->set('produtos', $produtos);
+        $this->render('index');
+    }
+
+    public function livro(){
+        $ProdutosTable= TableRegistry::get('produtos');  
+        $produtos = $ProdutosTable->find('all', [
+        'conditions' => ['produtos.tipo' => 1]
+        ]);
+        $this->set('produtos', $produtos);
+        $this->render('index');
+    }
+
+    public function filme(){
+        $ProdutosTable= TableRegistry::get('produtos');  
+        $produtos = $ProdutosTable->find('all',[
+            'conditions' => ['produtos.tipo' => 2]
+            ]);
+        $this->set('produtos', $produtos);
+        $this->render('index');
     }
 
     public function testando(){
@@ -33,8 +62,19 @@ class InicioController extends AppController
 
     public function salva(){
         $produtosTable = TableRegistry::get('Produtos');
+       
         $dados = $this->request->getData();
         
+        $image = $this->request->getData()['image_file'];
+
+      
+        $name = $image->getclientFilename();
+        
+        $targetPath = WWW_ROOT.'image'.DS.$name;
+        $image->moveTo($targetPath);
+        $dados['image'] = $name;
+
+
         $produtos = $produtosTable->newEntity($dados);
 
         if($produtosTable->save($produtos)) {
@@ -75,7 +115,14 @@ class InicioController extends AppController
         $this->render('cadastro');
     }
 
- 
+    public function teste($id){
+        $produtosTable = TableRegistry::get('produtos');
+        $produtos = $produtosTable->get($id);
+        $this->set('produtos', $produtos);
+        $this->render('teste');
+    }
+
+
 
 
 }
