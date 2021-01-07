@@ -1,6 +1,6 @@
 <?= $this->Form->create(null,['type'=>'get'])?>
-<?= $this->Form->control('key',['label' => 'search', 'values'=>$this->request->getQuery('key')])?>
-<?= $this->Form->submit()?>
+<input type="text" name="key" id="key" values=<?=$this->request->getQuery('key')?>>
+<?= $this->Form->submit('enviar ')?>
 <?= $this->Form->end()?>
 
 <table class=”table”>
